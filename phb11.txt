@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<script src='https://cdn.plot.ly/plotly-2.2.0.min.js'></script>
+<body>
+
+<style>
+.hoi {width:100%;
+      }
+
+th,td {text-align: center;
+       border-bottom: 1px solid #DCDCDC;}
+
+.button{   background-color:skyblue;}
+
+h1 {text-align: center;}
+</style>
+
+
+<body>
+
+<h1>排名榜</h1>
+
+<table class="hoi" id="paihangbang" ></table>
+
+<div style="text-align: center">
+<button class="button" button type="botton" onclick="yuki()">刷新</button>
+</div>
+
+<div id="bing" style="width:100%;max-width:700px"></div>
+
+<script>
+function yuki(){
+ location.reload()
+}
+</script>
+
+<script>
+var tou=["姓名","学号","第一题得分","第二题得分","第三题得分","第四题得分","总得分"]
+var data=[{"姓名":"甲","学号":02,"第一题得分":0,"第二题得分":10,"第三题得分":0,"第四题得分":10,"总得分":30},
+          {"姓名":"乙","学号":01,"第一题得分":10,"第二题得分":10,"第三题得分":10,"第四题得分":10,"总得分":40},
+          {"姓名":"丙","学号":03,"第一题得分":0,"第二题得分":0,"第三题得分":10,"第四题得分":10,"总得分":20},
+          {"姓名":"丁","学号":04,"第一题得分":0,"第二题得分":0,"第三题得分":0,"第四题得分":0,"总得分":0}
+          ]
+   
+for(k=0;k<3;k++)
+   if(data[k][tou[6]]<data[k+1][tou[6]])
+     { min=data[k];
+       data[k]=data[k+1];
+       data[k+1]=min;
+      }
+
+
+var table=document.getElementById("paihangbang")
+var tr=document.createElement("tr")
+table.appendChild(tr)
+
+
+for(var i=0;i<tou.length;i++)
+{   var th=document.createElement("th")
+    th.innerHTML=tou[i]
+    tr.appendChild(th)
+}
+
+
+for(var j=0;j<data.length;j++)
+{   var tr=document.createElement("tr")
+    table.appendChild(tr)
+    for(var m=0;m<tou.length;m++)
+       {var td=document.createElement("td")
+        td.innerHTML=data[j][tou[m]]
+        tr.appendChild(td)
+        }
+}
+
+var a=0;
+var b=0;
+var c=0;
+var d=0;
+for(var yi=0;yi<data.length;yi++)
+{  if (data[yi][tou[2]]==10)
+   a=a+1}
+for(var er=0;er<data.length;er++)
+{  if (data[er][tou[3]]==10)
+   b=b+1}
+for(var san=0;san<data.length;san++)
+{  if (data[san][tou[4]]==10)
+   c=c+1}
+for(var si=0;si<data.length;si++)
+{  if (data[si][tou[5]]==10)
+   d=d+1}
+var which = ["第一题得分","第二题得分","第三题得分","第四题得分"];
+var num = [a,b,c,d];
+var data = [{labels:which, values:num, type:"pie"}];
+
+Plotly.newPlot("bing", data);
+</script>
+
+</body>
+</html>
